@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { AppService } from './app.service';
 
 @Controller()
@@ -31,4 +31,10 @@ export class AppController {
     const course = this.appService.updateCourse(id, body)
     return course
   }
+
+  @Delete("courses/:id")
+  deleteCourse(@Param("id")id: string) {
+    return this.appService.deleteCourse(id)
+  }
+
 }

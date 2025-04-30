@@ -47,4 +47,11 @@ export class AppService {
     return course
   }
 
+  deleteCourse(id: string){
+    const course = this.courses.findIndex(c => c.id === id)
+
+    const deletedCourse = this.courses.splice(course, 1)
+    return {message: " Course Deleted", course: deletedCourse[0]}
+  }
+
 }
