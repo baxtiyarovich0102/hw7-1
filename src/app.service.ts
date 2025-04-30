@@ -1,4 +1,5 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
+import {v4 as uuid} from "uuid"
 
 @Injectable()
 export class AppService {
@@ -25,11 +26,25 @@ export class AppService {
   }
 
   getCourseById(id:string): any{
+    
     return this.courses.filter((course) => course.id == id).length
     ? this.courses.filter((course) => course.id == id)[0]
     : null
   }
 
-  
+  addCourse(courseData: {title: string, desc: string, price: number, teacherName: string, isAcrive?: boolean}) {
+    const course = {id: uuid(), ...courseData}
+    this.courses.push(course)
+    return course
+  }
+
+  updateCourse(id: string, courseData: {title: string, desc: string, price: number, teacherName: string, isAcrive?: boolean}) {
+    let course = this.getCourseById(id)
+    if (!course) {
+      throw new BadRequestException('Course is not found');
+    }
+    course = Object.assign(course, courseData)
+    return course
+  }
 
 }
